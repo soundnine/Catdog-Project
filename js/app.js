@@ -97,10 +97,13 @@ window.onload = () => {
 
     window.addEventListener('resize', () => {
         const canvasWrapper = document.querySelector('#canvas_wrapper');
-        canvas.resize(canvasWrapper.clientWidth - 10, canvasWrapper.clientHeight - 10);
-        drawTool.setXY(canvasWrapper.clientWidth - 10, canvasWrapper.clientHeight - 10);
+        const X = canvasWrapper.clientWidth - 10;
+        const Y = canvasWrapper.clientHeight - 10;
+        
+        canvas.resize(X, Y);
+        drawTool.setXY(X, Y);
         characterList.forEach((each) => {
-            each.setXY(canvasWrapper.clientWidth - 10, canvasWrapper.clientHeight - 10);
+            each.setXY(X, Y);
         })
     });
 }
