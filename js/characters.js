@@ -20,4 +20,9 @@ export class Characters{
         this.y += this.ySpeed;
         ctx.drawImage(this.image, this.x, this.y, this.radius*2, this.radius*2);
     }
+
+    notifyXY(x, y){
+        this.x = x;
+        this.y = y;
+    }
 }

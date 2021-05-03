@@ -1,5 +1,7 @@
 import {Event} from './event.js';
 import {Canvas} from './canvas.js';
+import { CharacterFactory } from './character-factory.js';
+import { Draw } from './draw.js';
 
 const getGridPosition = (width) => {
     if(1024 <= width){
@@ -28,16 +30,54 @@ const getGridPosition = (width) => {
 }
 
 window.onload = () => {
-    const event = new Event();
-    const firstObject = document.querySelector('.first');
-    const lastObject = document.querySelector('.last');
+    const firstElObject = document.querySelector('.first');
+    const lastElObject = document.querySelector('.last');
     const questionObjects = document.querySelectorAll('.special_markers');
-    let position = getGridPosition(window.innerWidth);
+    const canvas = new Canvas();
+
+    const CHARACTERTYPE = {
+        CAT : 'CAT',
+        DOG : 'DOG',
+        WINSLOW : 'WINSLOW'
+    }
+    const catImage = new Image();
+    catImage.src = '/Catdog/image/cat_head_canvas.png';
+    const dogImage = new Image();
+    dogImage.src = '/Catdog/image/dog_head_canvas.png';
+    const winslowImage = new Image();
+    winslowImage.src = '/Catdog/image/winslow_head_canvas.png';
+
+    const RADIUS = 48;
+    const X = canvas.getWidth();
+    const Y = canvas.getHeight();
+    const XSPEED = 8;
+    const YSPEED = 8;
+
+    const characterFactory = new CharacterFactory(RADIUS, X, Y, XSPEED, YSPEED);
+    const catCharacter1 = characterFactory.createCharacter(CHARACTERTYPE.CAT, catImage);
+    const catCharacter2 = characterFactory.createCharacter(CHARACTERTYPE.CAT, catImage);
+    const dogCharacter1 = characterFactory.createCharacter(CHARACTERTYPE.DOG, dogImage);
+    const dogCharacter2 = characterFactory.createCharacter(CHARACTERTYPE.DOG, dogImage);
+    const winslowCharacter1 = characterFactory.createCharacter(CHARACTERTYPE.WINSLOW, winslowImage);
+    const winslowCharacter2 = characterFactory.createCharacter(CHARACTERTYPE.WINSLOW, winslowImage);
+    const winslowCharacter3 = characterFactory.createCharacter(CHARACTERTYPE.WINSLOW, winslowImage);
+
+    const characterList = new Array();
+    characterList.push(catCharacter1);
+    characterList.push(dogCharacter1);
+    characterList.push(winslowCharacter1);
+    characterList.push(catCharacter2);
+    characterList.push(dogCharacter2);
+    characterList.push(winslowCharacter2);
+    characterList.push(winslowCharacter3);
+
+    //객체 생성할 때 컨텍스트 안넣어주면 context api 사용안됨
+    const drawTool = new Draw(characterList, canvas.getContext(), X, Y);
+    drawTool.drawCharacterBalls();
+
     let timer;
-
-    const canvasWrapper = document.querySelector('#canvas_wrapper');
-    const canvas = new Canvas(canvasWrapper);
-
+    let position = getGridPosition(window.innerWidth);
+    const eventObject = new Event();
     window.addEventListener('resize', function(e){
         if(timer){
             clearTimeout(timer);
@@ -46,14 +86,22 @@ window.onload = () => {
         timer = setTimeout(() => {
             const width = e.target.innerWidth;
             position = getGridPosition(width);
-            lastObject.style.gridColumn = `${position.start}/${position.end}`;
-            event.expandWidthHoverEvent(lastObject, position.start, position.end, position.moveTo, position.end);
+            lastElObject.style.gridColumn = `${position.start}/${position.end}`;
+            eventObject.expandWidthHoverEvent(lastElObject, position.start, position.end, position.moveTo, position.end);
         }, 100)
     });
 
-    event.expandWidthHoverEvent(firstObject, 1, 2, 1, 3);
-    event.expandWidthHoverEvent(lastObject, position.start, position.end, position.moveTo, position.end);
-    event.displayHiddenImgHoverEvent(questionObjects);
-    
+    eventObject.expandWidthHoverEvent(firstElObject, 1, 2, 1, 3);
+    eventObject.expandWidthHoverEvent(lastElObject, position.start, position.end, position.moveTo, position.end);
+    eventObject.displayHiddenImgHoverEvent(questionObjects);
+
+    window.addEventListener('resize', () => {
+        const canvasWrapper = document.querySelector('#canvas_wrapper');
+        canvas.resize(canvasWrapper.clientWidth - 10, canvasWrapper.clientHeight - 10);
+        drawTool.setXY(canvasWrapper.clientWidth - 10, canvasWrapper.clientHeight - 10);
+        characterList.forEach((each) => {
+            each.setXY(canvasWrapper.clientWidth - 10, canvasWrapper.clientHeight - 10);
+        })
+    });
 }
 

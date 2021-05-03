@@ -91,8 +91,6 @@ div:not(.special_markers,#canvas_wrapper):hover{
 }
 
 .main{
-    /* display:flex; */
-    /* background: no-repeat center url(/Catdog/image/catdog.png); */
     min-height: 360px;
     transition: all ease 1s;
     z-index:10;
@@ -112,22 +110,6 @@ div:not(.special_markers,#canvas_wrapper):hover{
     transition: all ease 1s;
     transform: rotateY(180deg);
 }
-
-/* .dog_head:hover{
-    transform: translate(0,-12%);
-}
-
-.dog_body:hover{
-    transform: translate(0,-6%);
-}
-
-.cat_body:hover{
-    transform: translate(0,-6%);
-}
-
-.cat_head:hover{
-    transform: translate(0,-12%);
-} */
 
 .fas{
     font-size: 10rem;
