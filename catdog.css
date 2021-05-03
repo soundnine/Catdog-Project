@@ -1,0 +1,156 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    overflow: auto;
+}
+section{
+    display: grid;
+    gap:10px;
+    min-height: 100vh;
+    min-width: 90vw;
+}
+
+@media(min-width:1024px){
+    section{
+        grid-template-columns: repeat(5, 1fr);
+    }
+    .main{
+        grid-column : 1/6;
+    } 
+    #canvas_wrapper{
+        grid-column: 4/6;
+    }
+}
+@media (min-width:768px) and (max-width: 1024px){
+    section{
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .main{
+        grid-column : 1/4;
+    } 
+    .sign_wrapper{
+        grid-column: 3/4;
+    }
+    #canvas_wrapper{
+        grid-column: 1/4;
+    }
+    .exclamation{
+        grid-column: 1/3;
+    }
+}
+
+@media(max-width:768px){
+    section{
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .main{
+        grid-column : 1/3;
+    } 
+    #canvas_wrapper{
+        grid-column: 1/3;
+    }
+    .sign_wrapper{
+        grid-column: 1/3;
+    }
+    .winslow_wrapper{
+        grid-column: 1/3;
+    }
+    .exclamation{
+        grid-column: 1/2;
+    }
+}
+
+div{
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    border-radius:10px;
+    padding-left:10px;
+    padding-right:10px;
+    padding-top:5px;
+    padding-bottom:5px;
+    box-shadow: inset -4px -4px 2px rgba(0, 0, 0, 0.4), 2px 2px 2px rgba(0, 0, 0, 0.7);
+}
+
+div:not(.special_markers,#canvas_wrapper):hover{
+    transform: scale(1.05);
+}
+
+.first{
+    transition: all ease 1s;
+    padding-top:5px;
+    padding-bottom:5px;
+}
+
+.last{
+    transition: all ease 1s;
+    padding-top:5px;
+    padding-bottom:5px;
+}
+
+.main{
+    /* display:flex; */
+    /* background: no-repeat center url(/Catdog/image/catdog.png); */
+    min-height: 360px;
+    transition: all ease 1s;
+    z-index:10;
+}
+
+.main_sub_img{
+    width:100%;
+    height:100%;
+}
+
+.main_sub{
+    width:inherit/5;
+    height:inherit/5;
+}
+
+.special_markers:hover{
+    transition: all ease 1s;
+    transform: rotateY(180deg);
+}
+
+/* .dog_head:hover{
+    transform: translate(0,-12%);
+}
+
+.dog_body:hover{
+    transform: translate(0,-6%);
+}
+
+.cat_body:hover{
+    transform: translate(0,-6%);
+}
+
+.cat_head:hover{
+    transform: translate(0,-12%);
+} */
+
+.fas{
+    font-size: 10rem;
+}
+
+.winslow{
+    height:200px;
+}
+
+@keyframes spin{
+    100%{
+        transform: rotate(360deg);
+    }
+}
+
+.dog_top{
+    height:200px;
+    animation: spin 4s linear infinite;
+    display:none;
+}
+
+.winslow_gif{
+    height:200px;
+    display:none;
+    border-radius:20px;
+}
